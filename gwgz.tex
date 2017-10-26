@@ -48,102 +48,11 @@
 \pagestyle{main}
 
 %% proper name & book name marks
-% adapted from Shinsaku Fujita http://xymtex.com/fujitas2/texlatex/
-% underline 
-\makeatletter
-\def\hidarikasen#1{%
-\ifydir\overline{#1}%
-\else\if@rotsw\overline{#1}\else
-\setbox\z@\hbox{#1}\leavevmode\lower.7zw
-\hbox to\z@{\hskip0.1zw\vrule\@width\dimexpr\wd\z@-0.2zw \@depth\z@ \@height.4\p@\hss}%
-\box\z@
-\fi\fi}
-\makeatother
-
-% wavy underline
-\usepackage{accents}
-\makeatletter
-\long\def\@fordbleq#1:=#2\do#3{%
-  \expandafter\def\expandafter\@fortmp\expandafter{#2}%
-    \ifx\@fortmp\@empty \else%
-    \expandafter\@dbleql@@p#2==\@nil==\@nil\@@#1{#3}\fi}
-\long\def\@dbleql@@p#1==#2==#3\@@#4#5{\def#4{#1}\ifx #4\@nnil \else%
-       #5\def#4{#2}\ifx #4\@nnil \else#5\@idbleql@@p #3\@@#4{#5}\fi\fi}
-\long\def\@idbleql@@p#1==#2\@@#3#4{\def#3{#1}\ifx #3\@nnil%
-       \expandafter\@fornoop \else%
-      #4\relax\expandafter\@idbleql@@p\fi#2\@@#3{#4}}
-
-\def\namisen{\lower.4zw\hbox{$\underaccent{\tilde}{\null\kern.26zw}$}}
-\def\hidarinamisen#1{%
-\@tempcnta=\z@\relax
-\@fordbleq\member:=#1\do{\global\advance\@tempcnta\@ne}%
-\ifnum\@tempcnta=1\relax
-\setbox\z@=\hbox{#1}\leavevmode
-\hbox to\z@{\hskip0.2zw\hbox to\wd\z@{%
-\leaders\hbox to 0.26zw{\hfil\namisen\hfil}\hfill}\hss}%
-\box\z@
-\else
- \@tempcntb=0
- \@fordbleq\member:=#1\do{%
- \advance\@tempcntb\@ne
- \ifnum\@tempcntb=1\relax
-   \setbox\z@=\hbox{\member}\leavevmode
-   \hbox to\z@{\hskip0.2zw\hbox to\wd\z@{%
-   \leaders\hbox to 0.26zw{\hfil\namisen\hfil}\hfill}\hss}%
-   \box\z@\break
-  \else
-   \ifnum\@tempcntb=\@tempcnta
-    \setbox\z@=\hbox{\member}\leavevmode
-    \hbox to\z@{\hskip0.2zw\hbox to\wd\z@{%
-    \leaders\hbox to 0.26zw{\hfil\namisen\hfil}\hfill}\hss}%
-    \box\z@
-   \else
-    \setbox\z@=\hbox{\member}\leavevmode
-    \hbox to\z@{\hskip0.2zw\hbox to\wd\z@{%
-    \leaders\hbox to 0.26zw{\hfil\namisen\hfil}\hfill}\hss}%
-    \box\z@\break
-   \fi\fi}%
- \fi}%
-
-% double underline
-\def\hnijusen{%
-\lower.65zw\hbox to.1zw{\hss
-\vrule\@width.1zw \@depth\z@ \@height.4\p@\hss}%
-\kern-.1zw
-\lower.75zw\hbox to.1zw{\hss
-\vrule\@width.1zw \@depth\z@ \@height.4\p@\hss}}
-%
-\def\hidarinijusen#1{%
-\@tempcnta=\z@\relax
-\@fordbleq\member:=#1\do{\global\advance\@tempcnta\@ne}%
-\ifnum\@tempcnta=1\relax
-\setbox\z@=\hbox{#1}\leavevmode
-\hbox to\z@{\kern.1zw\hbox to\wd0{%
-\leaders\hbox{\hfil\hnijusen\hfil}\hfill}\hss}%
-\box\z@
-\else
- \@tempcntb=0\relax
- \@fordbleq\member:=#1\do{%
- \advance\@tempcntb\@ne
- \ifnum\@tempcntb=1\relax
-   \setbox\z@=\hbox{\member}\leavevmode
-   \hbox to\z@{\kern.1zw\hbox to\wd0{%
-   \leaders\hbox{\hfil\hnijusen\hfil}\hfill}\hss}%
-   \box\z@\break
-  \else
-   \ifnum\@tempcntb=\@tempcnta
-   \setbox\z@=\hbox{\member}\leavevmode
-   \hbox to\z@{\kern.1zw\hbox to\wd0{%
-   \leaders\hbox{\hfil\hnijusen\hfil}\hfill}\hss}%
-   \box\z@
-   \else
-   \setbox\z@=\hbox{\member}\leavevmode
-   \hbox to\z@{\kern.1zw\hbox to\wd0{%
-   \leaders\hbox{\hfil\hnijusen\hfil}\hfill}\hss}%
-   \box\z@\break
-   \fi\fi}%
- \fi}%
-\makeatother
+\usepackage[normalem]{ulem}
+\newcommand\ProperName[1]{\hskip.1zw\uline{\kern-.1zw#1\kern-.1zw}\kern.1zw}
+\newcommand\PlaceName[1]{\edef\tempdepth{\the\ULdepth}\setlength{\ULdepth}{.75zw}\hskip.1zw\uuline{\kern-.1zw#1\kern-.1zw}\kern.1zw\setlength{\ULdepth}{\tempdepth}}
+\newcommand\smallwave{\bgroup \markoverwith{\lower3.5pt\hbox{\font\tempfont=lasy5 at .2zw\tempfont \char58}}\ULon}
+\newcommand\BookTitle[1]{\hskip.1zw\smallwave{\kern-.1zw#1\kern-.1zw}\kern.1zw}
 
 %% fonts
 \usepackage[dvipdfmx,bookmarksnumbered]{hyperref}
@@ -171,22 +80,21 @@
 \renewcommand\gtdefault{hei}
 
 %% misc layout settings
-% \usepackage{plext}
 \renewcommand{\thefootnote}{〔\zhdigits{\arabic{footnote}}〕}
 \setlength\parindent{2zw}
-% \usepackage{pxrubrica} 
+
 \begin{document}
 \mainmatter
 \chapter{}
-\section{{\hidarikasen{鄭伯}}克\hidarikasen{段}于\hidarinijusen{鄢}}
+\section[鄭伯克段于鄢]{\ProperName{鄭伯}克\ProperName{段}于\PlaceName{鄢}}
 
-初，\hidarikasen{鄭武公}娶于\hidarinijusen{申}\footnote{注一}，曰\hidarikasen{武姜}，生\hidarikasen{莊公}及\hidarikasen{共叔段}。\hidarikasen{莊公}寤生，驚\hidarikasen{姜氏}，故名曰\hidarikasen{寤生}，遂惡之。愛\hidarikasen{共叔段}，欲立之，亟請於\hidarikasen{武公}，\hidarikasen{公}弗許。
+初，\ProperName{鄭武公}娶于\PlaceName{申}\footnote{注一}，曰\ProperName{武姜}，生\ProperName{莊公}及\ProperName{共叔段}。\ProperName{莊公}寤生，驚\ProperName{姜氏}，故名曰\ProperName{寤生}，遂惡之。愛\ProperName{共叔段}，欲立之，亟請於\ProperName{武公}，\ProperName{公}弗許。
 
-及\hidarikasen{莊公}即位，為之請\hidarinijusen{制}。\hidarikasen{公}曰：「\hidarinijusen{制}，巖邑也。\hidarikasen{虢叔}死焉，佗邑唯命\footnote{再注}。」請京，使居之，謂之\hidarikasen{京城大叔}。
+及\ProperName{莊公}即位，為之請\PlaceName{制}。\ProperName{公}曰：「\PlaceName{制}，巖邑也。\ProperName{虢叔}死焉，佗邑唯命\footnote{再注}。」請京，使居之，謂之\ProperName{京城大叔}。
 
-\hidarikasen{祭仲}曰：「都城過百雉，國之害也。先王之制：大都，不過參國之一；中，五之一；小，九之一。今京不度，非制也，君將不堪。」\hidarikasen{公}曰：「\hidarikasen{姜氏}欲之，焉辟害？」對曰：「\hidarikasen{姜氏}何厭之有？不如早為之所，無使滋蔓！蔓，難圖也。蔓草猶不可除，況君之寵弟乎？」\hidarikasen{公}曰：「多行不義，必自斃，子姑待之！」
+\ProperName{祭仲}曰：「都城過百雉，國之害也。先王之制：大都，不過參國之一；中，五之一；小，九之一。今京不度，非制也，君將不堪。」\ProperName{公}曰：「\ProperName{姜氏}欲之，焉辟害？」對曰：「\ProperName{姜氏}何厭之有？不如早為之所，無使滋蔓！蔓，難圖也。蔓草猶不可除，況君之寵弟乎？」\ProperName{公}曰：「多行不義，必自斃，子姑待之！」
 
-既而\hidarikasen{大叔}命\hidarinijusen{西鄙}、\hidarinijusen{北鄙}貳於己。\hidarikasen{公子呂}曰：「國不堪貳，君將若之何？欲與\hidarikasen{大叔}，臣請事之；若弗與，則請除之，無生民心。」\hidarikasen{公}曰：「無庸，將自及。」
+既而\ProperName{大叔}命\PlaceName{西鄙}、\PlaceName{北鄙}貳於己。\ProperName{公子呂}曰：「國不堪貳，君將若之何？欲與\ProperName{大叔}，臣請事之；若弗與，則請除之，無生民心。」\ProperName{公}曰：「無庸，將自及。」
 
 大叔又收貳以為己邑，至於廩延。子封曰：「可矣！厚將得眾。」公曰：「不義不暱，厚將崩。」
 
@@ -198,7 +106,7 @@
 
 公入而賦：「大隧之中，其樂也融融。」姜出而賦：「大隧之外，其樂也泄泄！」遂為母子如初。
 
-君子曰：「潁考叔，純孝也，愛其母，施及莊公。\hidarinamisen{詩}曰：『孝子不匱，永錫爾類』{，}其是之謂乎？」
+君子曰：「潁考叔，純孝也，愛其母，施及莊公。\BookTitle{詩}曰：『孝子不匱，永錫爾類』{，}其是之謂乎？」
 
 
 \section{周鄭交質}
@@ -206,11 +114,11 @@
 
 王崩，周人將畀虢公政。四月，鄭祭足帥師取溫之麥。秋，又取成周之禾。周鄭交惡。
 
-君子曰：「信不由中，質無益也。明恕而行，要之以禮，雖無有質，誰能間之？苟有明信：澗溪沼沚之毛，蘋蘩薀藻之菜，筐筥錡釜之器，潢汙行潦之水，可薦於鬼神，可羞於王公。而況君子結二國之信，行之以禮，又焉用質？\hidarinamisen{風}有\hidarinamisen{采}\hidarinamisen{蘩}、\hidarinamisen{采蘋}，\hidarinamisen{雅}有\hidarinamisen{行葦}、\hidarinamisen{泂酌}，昭忠信也。」
+君子曰：「信不由中，質無益也。明恕而行，要之以禮，雖無有質，誰能間之？苟有明信：澗溪沼沚之毛，蘋蘩薀藻之菜，筐筥錡釜之器，潢汙行潦之水，可薦於鬼神，可羞於王公。而況君子結二國之信，行之以禮，又焉用質？\BookTitle{風}有\BookTitle{采}\BookTitle{蘩}、\BookTitle{采蘋}，\BookTitle{雅}有\BookTitle{行葦}、\BookTitle{泂酌}，昭忠信也。」
 
 
 \section{石碏諫寵州吁}
-衞莊公娶于齊東宮得臣之妹，曰莊姜，美而無子。衞人所為賦\hidarinamisen{碩人}也。又娶于陳，曰厲媯，生孝伯，蚤死。其娣戴媯，生桓公，莊姜以為己子。
+衞莊公娶于齊東宮得臣之妹，曰莊姜，美而無子。衞人所為賦\BookTitle{碩人}也。又娶于陳，曰厲媯，生孝伯，蚤死。其娣戴媯，生桓公，莊姜以為己子。
 
 公子州吁，嬖人之子也，有寵而好兵，公弗禁。莊姜惡之。
 
@@ -220,7 +128,6 @@
 
 
 \chapter{}
-
 \section{鄭子家告趙宣子}
 晉侯合諸侯于扈，平宋也。於是晉侯不見鄭伯，以為貳于楚也。 鄭子家使執訊而與之書，以告趙宣子，曰：「寡君即位三年，召蔡侯而與之事君。九月，蔡侯入于敝邑以行；敝邑以侯宣多之難，寡君是以不得與蔡侯偕。十一月，克減侯宣多，而隨蔡侯以朝於執事。
 
