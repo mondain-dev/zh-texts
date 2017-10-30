@@ -80,7 +80,13 @@
 \renewcommand\gtdefault{hei}
 
 %% misc layout settings
-\renewcommand{\thefootnote}{〔\zhdigits{\arabic{footnote}}〕}
+\renewcommand{\thefootnote}{\tate 〔\zhdigits{\arabic{footnote}}〕}
+\usepackage{graphicx}
+\makeatletter%
+\long\def\@makefnmark{%
+\hbox {\scalebox{0.4}[0.8]{\@thefnmark} }}
+\makeatother
+
 \setlength\parindent{2zw}
 
 \begin{document}
